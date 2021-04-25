@@ -90,33 +90,20 @@ public class Presenter
         GameStatus status = model.playMove(currentPlayer, coordinates);
 
         // If a move was invalid:
-        if (status == FAILED)
-        {
-            return new Information(FAILED, null, null);
-        }
-
-        Player opponent = Player.currentOpponent(currentPlayer);
+        if (status == FAILED) return new Information(FAILED, null, null);
 
         BitBoard board = model.getBoard();
 
-        long availablePlayer = model.availableMoves(currentPlayer);
-        long availableOpponent = model.availableMoves(opponent);
-
         // In case no player can make a move:
-        if ((availablePlayer | availableOpponent) == 0L)
-        {
-            return new Information(ENDED, model.EndingScenarios(), board);
-        }
+        if (model.isFinished()) return new Information(ENDED, model.EndingScenarios(), board);
+
+        Player opponent = Player.currentOpponent(currentPlayer);
 
         // In case of a SKIP scenario:
-        if (availableOpponent == 0L)
-        {
-            return new Information(SKIPPED, opponent, board);
-        }
+        if (model.isOutOfMoves(opponent)) return new Information(SKIPPED, opponent, board);
 
         // In case of a successful move:
         currentPlayer = opponent;
-
         return new Information(SUCCESSFUL, currentPlayer, board);
     }
 }

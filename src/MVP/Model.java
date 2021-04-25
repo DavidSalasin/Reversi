@@ -131,6 +131,28 @@ public class Model
 
 
     /**
+     * Checks if the game has ended, by both players not being able to play.
+     *
+     * @return boolean for if the game has ended.
+     */
+    public boolean isFinished()
+    {
+        return (availableMoves(BLACK) | availableMoves(WHITE)) == EMPTY_BOARD;
+    }
+
+
+    /**
+     * Checks if the passed player out of moves.
+     *
+     * @return boolean for if the player is out of moves.
+     */
+    public boolean isOutOfMoves(Player player)
+    {
+        return availableMoves(player) == EMPTY_BOARD;
+    }
+
+
+    /**
      * Checks if there are any available moves for the current searched-for player.
      *
      * @param currentPlayer The player the moves are searched for.
