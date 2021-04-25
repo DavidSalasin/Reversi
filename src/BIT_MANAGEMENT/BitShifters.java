@@ -1,80 +1,105 @@
 package BIT_MANAGEMENT;
 
+import java.util.HashMap;
+
 import BIT_MANAGEMENT.Enums.Direction;
 import BIT_MANAGEMENT.Interfaces.IBitShift;
 
 import static BIT_MANAGEMENT.Enums.Direction.*;
 
-import java.util.HashMap;
 
-public class BitShifters {
+/**
+ * <h1>Class type: 'BitShifters'</h1>
+ *
+ * Contains <u>HashMap</u> instance <b>shiftDict</b> for all of the board directional shifting expressions.
+ *
+ * @author David Salasin
+ */
+public class BitShifters
+{
+    /**
+     * Uses 'Direction' enum as KEY to access the implemented lambda expressions 'IBitShift' class VALUE.
+     *
+     * <b>NOTE:</b> static property.
+     *
+     * @see Direction
+     * @see IBitShift
+     */
+    public static HashMap<Direction, IBitShift> shiftDict = new HashMap<>();
 
-    public static HashMap<Direction, IBitShift> shift = new HashMap<>();
 
+    /**
+     * Board left edge mask, existing for guaranteeing a successful piece shift.
+     */
     private final static long LEFT_EDGE_MASK = -9187201950435737472L;
+
+
+    /**
+     * Board right edge mask, existing for guaranteeing a successful piece shift.
+     */
     private final static long RIGHT_EDGE_MASK = 72340172838076673L;
 
-    // BIT SHIFTING LAMBDAS:
+    // 'IBitShift' static lambda implementations for each board direction:
     static {
 
-        // NORTH_WEST:
-        shift.put(NORTH_WEST, new IBitShift() {
+        // North west direction:
+        shiftDict.put(NORTH_WEST, new IBitShift() {
             @Override
             public long bitShift(long position) {
                 return (position << 9) & ~RIGHT_EDGE_MASK;
             }
         });
 
-        // NORTH:
-        shift.put(NORTH, new IBitShift() {
+        // North direction:
+        shiftDict.put(NORTH, new IBitShift() {
             @Override
             public long bitShift(long position) {
                 return position << 8;
             }
         });
 
-        // NORTH EAST:
-        shift.put(NORTH_EAST, new IBitShift() {
+        // North east direction:
+        shiftDict.put(NORTH_EAST, new IBitShift() {
             @Override
             public long bitShift(long position) {
                 return (position << 7) & ~LEFT_EDGE_MASK;
             }
         });
 
-        // EAST:
-        shift.put(EAST, new IBitShift() {
+        // east direction:
+        shiftDict.put(EAST, new IBitShift() {
             @Override
             public long bitShift(long position) {
                 return (position >>> 1) & ~LEFT_EDGE_MASK;
             }
         });
 
-        // SOUTH EAST:
-        shift.put(SOUTH_EAST, new IBitShift() {
+        // South east direction:
+        shiftDict.put(SOUTH_EAST, new IBitShift() {
             @Override
             public long bitShift(long position) {
                 return (position >>> 9) & ~LEFT_EDGE_MASK;
             }
         });
 
-        // SOUTH:
-        shift.put(SOUTH, new IBitShift() {
+        // south direction:
+        shiftDict.put(SOUTH, new IBitShift() {
             @Override
             public long bitShift(long position) {
                 return position >>> 8;
             }
         });
 
-        // SOUTH WEST:
-        shift.put(SOUTH_WEST, new IBitShift() {
+        // south west direction:
+        shiftDict.put(SOUTH_WEST, new IBitShift() {
             @Override
             public long bitShift(long position) {
                 return (position >>> 7) & ~RIGHT_EDGE_MASK;
             }
         });
 
-        // WEST:
-        shift.put(WEST, new IBitShift() {
+        // west direction:
+        shiftDict.put(WEST, new IBitShift() {
             @Override
             public long bitShift(long position) {
                 return (position << 1) & ~RIGHT_EDGE_MASK;

@@ -1,46 +1,53 @@
 package MVP;
 
+import java.util.*;
+
 import BIT_MANAGEMENT.BitBoard;
+
 import MVP.Enums.Difficulty;
 import MVP.Enums.Player;
-import MVP.Interfaces.IPresenter;
-import MVP.Interfaces.IView;
-
-import java.util.*;
 
 import static MVP.Enums.Player.*;
 import static MVP.Enums.GameStatus.*;
+import static MVP.Enums.Difficulty.*;
+
 
 /**
- * ReversiView class (VIEW LAYER) for Reversi.
+ * <h1>Class type: 'View'</h1>
+ *
+ * The <b>VIEW</b> layer for the Reversi game:
  * Frontend interaction with player from the game.
  *
  * @author David Salasin
  */
-public class View implements IView
+public class View
 {
     // Scanner for user console input.
     private static final Scanner input = new Scanner(System.in);
 
-    // Presenter layer for View.
-    private final IPresenter presenter;
 
+    // Presenter LAYER.
+    private final Presenter presenter;
+
+
+    // View status flags:
     private boolean playFlag;
     private boolean inputFlag;
+
+
+    // Current player.
     private Player currentPlayer;
 
-    /*
-     * Constructor of VIEW.
-     */
+
+    // Constructor of VIEW.
+    // Constructing Presenter for view to contact Model.
     public View()
     {
-        // Constructing Presenter for view to contact Model.
         presenter = new Presenter();
     }
 
 
     // Prints current game board positions.
-    /* Customised GUI that fits the next game board edges: 2 (for testing), 4, 8 (BY DEFAULT), 16 and 32 */
     public void printBoard(BitBoard board)
     {
         int i, j, edge = 8;
@@ -86,6 +93,8 @@ public class View implements IView
         System.out.print("\n\n");
     }
 
+
+    // Returns player's coordinates input.
     private static Coordinates playerInput()
     {
         ArrayList<Object> codes = null;
@@ -206,7 +215,7 @@ public class View implements IView
     // Static function for playing the game.
     public void play(Difficulty gameMode)
     {
-        boolean AIFlag = false;
+        boolean AIFlag = gameMode != PVP;
 
         // Starts the game at the user end -> GUI view front.
         String title = "\n\t\t\t\t\t< REVERSI GAME >";
@@ -228,40 +237,38 @@ public class View implements IView
 
             inputFlag = true;
 
+            // Player vs Player/AI:
+
             while (inputFlag)
             {
-
-                // Player vs Player/AI:
-
-//                Coordinates coordinates = playerInput();
-//                pInfo = presenter.playerTurn(coordinates);
-//                presentInformation(pInfo);
-
-                // AI vs AI:
-
-                long start = System.currentTimeMillis();
-
-                pInfo = presenter.playerTurn(null);
-
-                long finish = System.currentTimeMillis();
-
-                System.out.printf("Finished in %f seconds.\n", (float)(finish - start) / 1000);
-
+                Coordinates coordinates = playerInput();
+                pInfo = presenter.playerTurn(coordinates);
                 presentInformation(pInfo);
             }
 
+            // Player vs AI:
 
+            if (AIFlag && pInfo.status == SUCCESSFUL)
+            {
+                System.out.println("AI's turn.");
+                presentInformation(presenter.playerTurn(null));
+            }
 
+            // AI vs AI:
 
-                // Player vs AI:
+            /*
+                while (inputFlag)
+                {
+                    long start = System.currentTimeMillis();
+                    pInfo = presenter.playerTurn(null);
+                    long finish = System.currentTimeMillis();
+                    System.out.printf("Finished in %f seconds.\n", (float)(finish - start) / 1000);
+                    presentInformation(pInfo);
+                }
 
-            input.nextLine();
+                input.nextLine();
+             */
 
-                //            if (AIFlag == true && pInfo.status == SUCCESSFUL)
-                //            {
-                //                System.out.println("AI's turn.");
-                //                presentInformation(presenter.playerTurn(null));
-                //            }
         }
     }
 }

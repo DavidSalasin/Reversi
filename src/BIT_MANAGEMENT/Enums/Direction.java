@@ -1,6 +1,15 @@
 package BIT_MANAGEMENT.Enums;
 
-public enum Direction {
+
+/**
+ * <h1>Enum type: 'Direction'</h1>
+ *
+ * Used to represent the 8 compass directions of a board.
+ *
+ * @author David Salasin
+ */
+public enum Direction
+{
     NORTH_WEST,
     NORTH,
     NORTH_EAST,
@@ -8,5 +17,5 @@ public enum Direction {
     SOUTH_EAST,
     SOUTH,
     SOUTH_WEST,
-    WEST;
+    WEST
 }

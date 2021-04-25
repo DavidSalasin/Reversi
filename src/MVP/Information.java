@@ -5,19 +5,44 @@ import MVP.Enums.GameStatus;
 import MVP.Enums.Player;
 
 /**
- * Information class, encapsulating variables passed between the view and the presenter layers of the game.
+ * <h1>Class type: 'Information'</h1>
+ *
+ * Encapsulates game information/variables passed between the VIEW and
+ * the PRESENTER layers of the game.
+ *
+ * @author David Salasin
  */
 public class Information
 {
-    // Game status for the view to represent.
+    /**
+     * 'GameStatus' for the state of the game.
+     */
     public GameStatus status;
 
-    // Current player according to the situation.
+
+    /**
+     * The Player the information is referring to.
+     */
     public Player player;
 
-    // Board, if a need to represent it exists.
+
+    /**
+     * 'BitBoard' reference, if a need to represent it exists.
+     */
     public BitBoard board;
 
+
+    /**
+     * Constructor for 'Information'.
+     * <p></p>
+     * Initiates Information's properties with the passed parameters
+     * (Encapsulating them with as <u>public</u> properties).
+     *
+     * @param status State of the game.
+     * @param player Referred player with the information.
+     * @param board 'BitBoard' reference.
+     * @see GameStatus
+     */
     public Information(GameStatus status, Player player, BitBoard board)
     {
         this.status = status;
