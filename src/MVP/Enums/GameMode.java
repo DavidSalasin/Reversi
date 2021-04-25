@@ -4,16 +4,16 @@ import MVP.Model;
 
 
 /**
- * <h1>Enum type: 'Difficulty'</h1>
+ * <h1>Enum type: 'GameMode'</h1>
  *
- * Used to represent a chosen game difficulty.
+ * Used to represent a chosen game mode (PVP / AI difficulty).
  * <p></p>
  * Includes depth parameter, for AI's game-tree generic setting of the
  * depth for each difficulty.
  *
  * @author David Salasin
  */
-public enum Difficulty
+public enum GameMode
 {
     PVP(0),
     BEGINNER(4),
@@ -30,11 +30,11 @@ public enum Difficulty
 
 
     /**
-     * 'Difficulty' enum constructor.
+     * 'GameMode' enum constructor.
      *
      * @param depth AI's game-tree depth.
      */
-    Difficulty(int depth)
+    GameMode(int depth)
     {
         this.depth = depth;
     }

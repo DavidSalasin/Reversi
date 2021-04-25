@@ -4,12 +4,14 @@ import java.util.*;
 
 import BIT_MANAGEMENT.BitBoard;
 
-import MVP.Enums.Difficulty;
+import INFORMATION_ENCAPSULATION.Coordinates;
+import INFORMATION_ENCAPSULATION.Information;
+import MVP.Enums.GameMode;
 import MVP.Enums.Player;
 
 import static MVP.Enums.Player.*;
 import static MVP.Enums.GameStatus.*;
-import static MVP.Enums.Difficulty.*;
+import static MVP.Enums.GameMode.*;
 
 
 /**
@@ -213,7 +215,7 @@ public class View
     }
 
     // Static function for playing the game.
-    public void play(Difficulty gameMode)
+    public void play(GameMode gameMode)
     {
         boolean AIFlag = gameMode != PVP;
 
@@ -226,7 +228,6 @@ public class View
 
         // Prints the starting game board, and sets starting player as received from backend.
         printBoard(pInfo.board);
-        input.nextLine();
 
         playFlag = true;
         currentPlayer = pInfo.player;

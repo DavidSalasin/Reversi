@@ -1,4 +1,4 @@
-package MVP;
+package INFORMATION_ENCAPSULATION;
 
 import BIT_MANAGEMENT.BitBoard;
 import MVP.Enums.GameStatus;

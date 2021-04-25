@@ -1,4 +1,4 @@
-package MVP;
+package INFORMATION_ENCAPSULATION;
 
 /**
  * <h1>Class type: 'Coordinates'</h1>

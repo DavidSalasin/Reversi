@@ -1,12 +1,12 @@
 package test_MVP.Model;
 
 import BIT_MANAGEMENT.BitBoard;
-import MVP.Coordinates;
+import INFORMATION_ENCAPSULATION.Coordinates;
 import MVP.Model;
 import org.junit.jupiter.api.Test;
 
 import static MVP.Enums.Player.*;
-import static MVP.Enums.Difficulty.*;
+import static MVP.Enums.GameMode.*;
 
 class test_playMove
 {

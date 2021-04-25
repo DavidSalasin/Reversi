@@ -1,5 +1,7 @@
-package MVP;
+package INFORMATION_ENCAPSULATION;
 
+
+import MVP.Model;
 
 /**
  * <h1>Class type: 'Move'</h1>

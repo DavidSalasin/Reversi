@@ -4,7 +4,7 @@ import MVP.Model;
 import org.junit.jupiter.api.Test;
 
 import static MVP.Enums.Player.*;
-import static MVP.Enums.Difficulty.*;
+import static MVP.Enums.GameMode.*;
 
 public class test_availableMoves
 {

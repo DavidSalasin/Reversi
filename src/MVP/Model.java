@@ -4,7 +4,9 @@ import BIT_MANAGEMENT.BitBoard;
 import BIT_MANAGEMENT.BitShifters;
 import BIT_MANAGEMENT.Enums.Direction;
 import BIT_MANAGEMENT.Interfaces.IBitShift;
-import MVP.Enums.Difficulty;
+import INFORMATION_ENCAPSULATION.Coordinates;
+import INFORMATION_ENCAPSULATION.Move;
+import MVP.Enums.GameMode;
 import MVP.Enums.GameStatus;
 import MVP.Enums.Player;
 import MVP.Interfaces.IEvaluate;
@@ -20,7 +22,7 @@ import static MVP.Enums.GameStatus.*;
  * contains database of the board game and the functionality between plays.
  * <p></p>
  * 'Model' also holds to AI methods, which operate generically according to
- * the player's choice of game difficulty.
+ * the player's choice of game mode (PVP / AI difficulty).
  *
  * @author David Salasin
  */
@@ -35,18 +37,18 @@ public class Model
 
     
     /**
-     * Difficulty of the game/AI.
+     * Game mode (AI Difficulty) of the game.
      * <p></p>
      * <u>PVP</u> when the game is player vs player.
      *
-     * @see Difficulty
+     * @see GameMode
      * @see Evaluate
      */
-    private Difficulty gameMode;
+    private GameMode gameMode;
 
     
     /**
-     * IEvaluate heuristic instance according to game's difficulty move.
+     * IEvaluate heuristic instance according to game's difficulty.
      * <p></p>
      * <b>NOTE:</b> INITIATED TO NULL when the game is player vs player.
      */
@@ -90,9 +92,9 @@ public class Model
      * Initiates board according to the starting pieces, and game's mode
      * to player's choice, also updating the heuristic instance.
      * 
-     * @param gameMode Player's chosen game difficulty.
+     * @param gameMode Player's chosen game mode (PVP / AI difficulty).
      */
-    public void init(Difficulty gameMode)
+    public void init(GameMode gameMode)
     {
         board.setColorBits(BLACK, FIRST_BITS_BLACK);
         board.setColorBits(WHITE, FIRST_BITS_WHITE);

@@ -2,7 +2,7 @@ package BIT_MANAGEMENT;
 
 import java.util.HashMap;
 
-import MVP.Coordinates;
+import INFORMATION_ENCAPSULATION.Coordinates;
 import MVP.Enums.Player;
 
 import static MVP.Enums.Player.*;

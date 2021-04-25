@@ -1,7 +1,9 @@
 package MVP;
 
 import BIT_MANAGEMENT.BitBoard;
-import MVP.Enums.Difficulty;
+import INFORMATION_ENCAPSULATION.Coordinates;
+import INFORMATION_ENCAPSULATION.Information;
+import MVP.Enums.GameMode;
 import MVP.Enums.GameStatus;
 import MVP.Enums.Player;
 
@@ -48,12 +50,12 @@ public class Presenter
      * Initiates the game at the BACKEND level.
      * <p></p>
      * Sets up starting <b>player's value (BY DEFAULT BLACK)</b> and <b>initiates the MODEL
-     * layer to the game</b>: board data structure and game mode (difficulty).
+     * layer to the game</b>: board data structure and game mode (PVP / AI difficulty).
      *
      * @param gameMode player's game mode preference.
      * @return 'Information' reference about the starting setup of the game.
      */
-    public Information startGame(Difficulty gameMode)
+    public Information startGame(GameMode gameMode)
     {
         // Initiating values: Starting player and board's pieces.
         currentPlayer = BLACK;
