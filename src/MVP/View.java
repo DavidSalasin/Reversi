@@ -99,6 +99,8 @@ public class View
     // Returns player's coordinates input.
     private static Coordinates playerInput()
     {
+
+
         ArrayList<Object> codes = null;
 
         boolean falseInputFlag = true;
@@ -234,42 +236,58 @@ public class View
 
         while (playFlag)
         {
-            System.out.println(currentPlayer +"'s turn. Enter Y row (1 - 8) and X (A - H / a - h) column:");
-
-            inputFlag = true;
 
             // Player vs Player/AI:
 
-            while (inputFlag)
+            if (pInfo.status == SKIPPED)
             {
-                Coordinates coordinates = playerInput();
-                pInfo = presenter.playerTurn(coordinates);
-                presentInformation(pInfo);
+                pInfo.status = SUCCESSFUL;
             }
+            else
+            {
+                System.out.println(currentPlayer +"'s turn. Enter Y row (1 - 8) and X (A - H / a - h) column:");
+
+                inputFlag = true;
+                while (inputFlag)
+                {
+                    Coordinates coordinates = playerInput();
+                    pInfo = presenter.playerTurn(coordinates);
+                    presentInformation(pInfo);
+                }
+            }
+
 
             // Player vs AI:
 
-            if (AIFlag && pInfo.status == SUCCESSFUL)
+            if (AIFlag && pInfo.status == SKIPPED)
+            {
+                pInfo.status = SUCCESSFUL;
+            }
+            else if (AIFlag && playFlag)
             {
                 System.out.println("AI's turn.");
-                presentInformation(presenter.playerTurn(null));
+                long start = System.currentTimeMillis();
+                pInfo = presenter.playerTurn(null);
+                long finish = System.currentTimeMillis();
+                System.out.printf("Finished in %f seconds.\n", (float)(finish - start) / 1000);
+                presentInformation(pInfo);
             }
 
             // AI vs AI:
 
-            /*
-                while (inputFlag)
-                {
-                    long start = System.currentTimeMillis();
-                    pInfo = presenter.playerTurn(null);
-                    long finish = System.currentTimeMillis();
-                    System.out.printf("Finished in %f seconds.\n", (float)(finish - start) / 1000);
-                    presentInformation(pInfo);
-                }
-
-                input.nextLine();
-             */
-
+//            inputFlag = true;
+//
+//            counter++;
+//            if (counter > 51) input.nextLine();
+//
+//            while (inputFlag)
+//            {
+//                long start = System.currentTimeMillis();
+//                pInfo = presenter.playerTurn(null);
+//                long finish = System.currentTimeMillis();
+//                System.out.printf("Finished in %f seconds.\n", (float)(finish - start) / 1000);
+//                presentInformation(pInfo);
+//            }
         }
     }
 }

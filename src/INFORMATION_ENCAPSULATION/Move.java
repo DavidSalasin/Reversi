@@ -22,7 +22,7 @@ public class Move extends Coordinates
 
     /**
      * Constructor for 'Move'.
-     * <p></p>
+     *
      * Sets 'Coordinate' properties accordingly, and initiates score to minus
      * infinity (a really big negative number).
      *
@@ -32,7 +32,7 @@ public class Move extends Coordinates
     public Move(int y_position, int x_position)
     {
         super(y_position, x_position);
-        score = -1000;
+        score = -Integer.MAX_VALUE;
     }
 
 

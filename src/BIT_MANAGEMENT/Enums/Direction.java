@@ -1,6 +1,8 @@
 package BIT_MANAGEMENT.Enums;
 
 
+import java.util.HashMap;
+
 /**
  * <h1>Enum type: 'Direction'</h1>
  *
@@ -17,5 +19,5 @@ public enum Direction
     SOUTH_EAST,
     SOUTH,
     SOUTH_WEST,
-    WEST
+    WEST;
 }

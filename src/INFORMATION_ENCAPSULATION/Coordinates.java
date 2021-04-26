@@ -23,7 +23,7 @@ public class Coordinates
 
     /**
      * Constructor for 'Coordinates'.
-     * <p></p>
+     *
      * Initiates vertical/horizontal properties accordingly.
      *
      * @param y_position Vertical position of a board slot.

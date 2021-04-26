@@ -1,6 +1,6 @@
 import MVP.View;
 
-import static MVP.Enums.GameMode.*;
+import static MVP.Enums.GameMode.HARDCORE;
 
 public class Main
 {
@@ -8,6 +8,6 @@ public class Main
     public static void main(String[] args)
     {
         // Plays Reversi (WITH INSERTED GAME MODE)
-        new View().play(BEGINNER);
+        new View().play(HARDCORE);
     }
 }

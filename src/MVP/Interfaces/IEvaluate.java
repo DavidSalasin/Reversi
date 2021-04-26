@@ -3,6 +3,7 @@ package MVP.Interfaces;
 import BIT_MANAGEMENT.BitBoard;
 
 import MVP.Enums.Player;
+import MVP.Model;
 
 
 /**
@@ -17,9 +18,9 @@ public interface IEvaluate {
     /**
      * Evaluates a score according to board's pieces for the current player.
      *
-     * @param board 'BitBoard' reference for the current board.
+     * @param model 'Model' class, including the 'BitBoard' structure and other bit board operations.
      * @param currentPlayer Player the score is being evaluated for.
      * @return Evaluated Integer score, by the set heuristic function.
      */
-    int evaluate(BitBoard board, Player currentPlayer);
+    int evaluate(Model model, Player currentPlayer);
 }

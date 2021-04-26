@@ -7,7 +7,7 @@ import MVP.Model;
  * <h1>Enum type: 'GameMode'</h1>
  *
  * Used to represent a chosen game mode (PVP / AI difficulty).
- * <p></p>
+ *
  * Includes depth parameter, for AI's game-tree generic setting of the
  * depth for each difficulty.
  *
@@ -16,9 +16,9 @@ import MVP.Model;
 public enum GameMode
 {
     PVP(0),
-    BEGINNER(4),
-    INTERMEDIATE(8),
-    HARDCORE(12);
+    BEGINNER(5),
+    INTERMEDIATE(7),
+    HARDCORE(9);
 
 
     /**

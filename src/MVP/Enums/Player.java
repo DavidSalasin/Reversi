@@ -6,7 +6,7 @@ package MVP.Enums;
  *
  * Used to represent each of the two players (separated by
  * opposing colors).
- * <p></p>
+ *
  * Includes heuristic label parameter for score calculation,
  * and a textual icon char.
  *

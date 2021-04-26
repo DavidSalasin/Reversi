@@ -16,7 +16,7 @@ import static MVP.Enums.GameStatus.*;
  *
  * The <b>PRESENTER</b> layer for the Reversi game:
  * Manages interaction between the VIEW layer(player, FRONTEND) and MODEL (game, BACKEND).
- * <p></p>
+ *
  * ! FILL ACCORDING TO WEB VERSION !
  *
  * @author David Salasin
@@ -37,7 +37,7 @@ public class Presenter
 
     /**
      * Constructor for 'Presenter'.
-     * <p></p>
+     *
      * Initiates the 'Model' instance.
      */
     public Presenter()
@@ -48,7 +48,7 @@ public class Presenter
 
     /**
      * Initiates the game at the BACKEND level.
-     * <p></p>
+     *
      * Sets up starting <b>player's value (BY DEFAULT BLACK)</b> and <b>initiates the MODEL
      * layer to the game</b>: board data structure and game mode (PVP / AI difficulty).
      *
@@ -69,7 +69,7 @@ public class Presenter
 
     /**
      * Plays the board coordinates for the current player.
-     * <p></p>
+     *
      * Returns game information to view according to the played move (with an 'Information'
      * instance), according to 4 situations:
      * - a <b>successful</b> move
@@ -85,7 +85,7 @@ public class Presenter
         // If player didn't pass coordinates -> play with the set difficulty AI.
         coordinates = coordinates == null ? model.mostEvaluatedPlay(currentPlayer) : coordinates;
 
-        // System.out.println("Y POS:   " + coordinates.y_position + "   |   X POS:   " + coordinates.x_position);
+        System.out.println("Y POS:   " + coordinates.y_position + "   |   X POS:   " + coordinates.x_position);
 
         GameStatus status = model.playMove(currentPlayer, coordinates);
 

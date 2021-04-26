@@ -18,11 +18,13 @@ import static MVP.Enums.GameStatus.*;
 /**
  * <h1>Class type: 'Model'</h1>
  *
+ *
  * The <b>MODEL</b> layer for the Reversi game: The brain behind the game,
  * contains database of the board game and the functionality between plays.
- * <p></p>
+ *
  * 'Model' also holds to AI methods, which operate generically according to
  * the player's choice of game mode (PVP / AI difficulty).
+ *
  *
  * @author David Salasin
  */
@@ -38,7 +40,7 @@ public class Model
     
     /**
      * Game mode (AI Difficulty) of the game.
-     * <p></p>
+     *
      * <u>PVP</u> when the game is player vs player.
      *
      * @see GameMode
@@ -49,7 +51,7 @@ public class Model
     
     /**
      * IEvaluate heuristic instance according to game's difficulty.
-     * <p></p>
+     *
      * <b>NOTE:</b> INITIATED TO NULL when the game is player vs player.
      */
     private IEvaluate heuristic;
@@ -72,12 +74,12 @@ public class Model
      */
     private static final long EMPTY_BOARD = 0L;
 
-    
+
     /**
      * Constructor for 'Model'.
-     * <p></p>
      * Creates an instance of game board's 'BitBoard' database.
      * Sets game's mode to <u>null</u>.
+     *
      * 
      * @see BitBoard
      */
@@ -91,6 +93,7 @@ public class Model
     /**
      * Initiates board according to the starting pieces, and game's mode
      * to player's choice, also updating the heuristic instance.
+     *
      * 
      * @param gameMode Player's chosen game mode (PVP / AI difficulty).
      */
@@ -98,6 +101,7 @@ public class Model
     {
         board.setColorBits(BLACK, FIRST_BITS_BLACK);
         board.setColorBits(WHITE, FIRST_BITS_WHITE);
+
 
         this.gameMode = gameMode;
         this.heuristic = Evaluate.heuristicDic.get(gameMode);
@@ -293,21 +297,24 @@ public class Model
     /**
      * Game-tree algorithm, searching recursively for the best score move available
      * to the current player (for the current board status).
-     * <p></p>
+     *
      * <b>Called only</b> by <u>mostEvaluatedPlay</u> and itself, and <b>always</b> returns
      * the negative value of the maximum value found, as the function is called recursively
      * between each of the players turns and one's maximum score is the worst score there
      * could be for the opponent.
-     * <p></p>
+     *
      * ! MISSING EXPLANATION FOR ALPHA-BETA !
+     * ABP 's (alpha-beta pruning) existence in this game tree algorithm allows the tree
+     * to prune branches it knows it won't take values from them, through minimum floor
+     * and maximum ceiling values: alpha and beta respectively.
      *
      * @param depth Current level of depth of the game tree.
      * @param currentPlayer Current player checked for the level of play.
-     * @param alpha * missing *
-     * @param beta * missing *
+     * @param alpha floor parameter. for working with minimum known floor scores.
+     * @param beta ceiling parameter.
      * @return Best score (int) found in that node of the game tree.
      */
-    public int negamax(int depth, Player currentPlayer, int alpha, int beta)
+    public int gameTree(int depth, Player currentPlayer, int alpha, int beta)
     {
         Player currentOpponent = Player.currentOpponent(currentPlayer);
 
@@ -317,19 +324,20 @@ public class Model
         // Leaf in a game tree:
         // If the game has ended / depth reached to 0.
         if (depth == 0 || (playerMoves | opponentMoves) == EMPTY_BOARD) {
-            return -1 * currentPlayer.label * heuristic.evaluate(board, currentOpponent);
+            int score = heuristic.evaluate(this, currentOpponent);
+            return -1 * currentPlayer.label * score;
         }
 
         // Turn skip in a game tree:
         // If current player can't move.
         if (playerMoves == EMPTY_BOARD) {
-            return -1 * negamax(depth - 1, currentOpponent, -beta, -alpha);
+            return -1 * gameTree(depth - 1, currentOpponent, -beta, -alpha);
         }
 
         BitBoard boardCopy = new BitBoard();
         BitBoard.copyBoard(board, boardCopy);
 
-        int score = -1000;
+        int score = -Integer.MAX_VALUE;
         long moveIterator = 1L;
 
         int bitTrailingZeroCount;
@@ -349,7 +357,7 @@ public class Model
             playMove(currentPlayer, moveIterator);
 
             // Updating the maximum score and alpha's score accordingly.
-            score = Math.max(score, negamax(depth - 1, currentOpponent, -beta, -alpha));
+            score = Math.max(score, gameTree(depth - 1, currentOpponent, -beta, -alpha));
             alpha = Math.max(alpha, score);
 
             // Reversing the last move that was made, and moving on to the next bit position move.
@@ -358,7 +366,7 @@ public class Model
             playerMoves = playerMoves >>> 1;
             moveIterator = moveIterator << 1;
 
-            // * missing *
+            // If floor alpha parameter as reached the ceiling: exit.
             if (alpha >= beta)
             {
                 return -beta;
@@ -372,7 +380,6 @@ public class Model
 
     /**
      * Returns the best position play for the player.
-     * <p></p>
      * The algorithm runs through all of the available moves for the current
      * player, and returns the board coordinates for the most evaluated play.
      *
@@ -416,10 +423,11 @@ public class Model
             playMove(currentPlayer, moveIterator);
 
             // Calculate the score of the current tested move.
-            currentMoveScore = currentPlayer.label * negamax(gameMode.depth, currentOpponent,-1000, -bestPlay.score);
+            currentMoveScore = currentPlayer.label * gameTree(gameMode.depth, currentOpponent, -Integer.MAX_VALUE, -bestPlay.score);
 
             // If found score is better than current's best -> update best play's properties.
-            if (currentMoveScore > bestPlay.score) {
+            if (currentMoveScore >= bestPlay.score)
+            {
                 bestPlay.updateMove(potentialMove.y_position, potentialMove.x_position, currentMoveScore);
             }
 
@@ -428,9 +436,13 @@ public class Model
             playerMoves = playerMoves >>> bitTrailingZeroCount;
             playerMoves = playerMoves >>> 1;
             moveIterator = moveIterator << 1;
-        }
 
-        // System.out.println("Score: " + bestPlay.score);
+            // If player found a winning play: break.
+            if (bestPlay.score == Integer.MAX_VALUE)
+            {
+                playerMoves = EMPTY_BOARD;
+            }
+        }
 
         return bestPlay;
     }

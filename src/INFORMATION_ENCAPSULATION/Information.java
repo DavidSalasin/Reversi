@@ -34,7 +34,7 @@ public class Information
 
     /**
      * Constructor for 'Information'.
-     * <p></p>
+     *
      * Initiates Information's properties with the passed parameters
      * (Encapsulating them with as <u>public</u> properties).
      *
